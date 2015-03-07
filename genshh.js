@@ -1,4 +1,7 @@
 var rapgeniusClient = require("rapgenius-js");
+// search rapgenius via CLI
+// codecor@github
+// 2015
 
 var lyricsSearchCb = function(err, lyricsAndExplanations){
     if(err){
@@ -31,15 +34,19 @@ var searchCallback = function(err, songs){
 
 var q="";
 
-// print process.argv
-process.argv.forEach(function (val, index, array) {
-    console.log(index + ': ' + val);
-    if (index > 1) {
-        q+=val+" ";
-    }
-});
+if (process.argv.length < 3) {
+    console.log("usage: node genssh.js \"a string of lyrics\"");
+} else {
 
-console.log("q="+q);
+    process.argv.forEach(function (val, index, array) {
 
-//rapgeniusClient.searchSong("Liquid Swords", "rap", searchCallback);
-rapgeniusClient.searchSong(q, "rap", searchCallback);
+        if (index > 1) {
+            q+=val+" ";
+        }
+    });
+
+    console.log("[searching for string] "+q);
+
+    // TODO add flag for category
+    rapgeniusClient.searchSong(q, "rap", searchCallback);
+}
